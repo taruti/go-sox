@@ -410,10 +410,9 @@ func maybeCEncoding(encoding *EncodingInfo) *C.sox_encodinginfo_t {
 }
 
 // maybeCString returns a C string for a given string, or nil
-// for anything else.
+// for anything else. Empty string is translated to nil.
 func maybeCString(s interface{}) *C.char {
-	switch s := s.(type) {
-	case string:
+	if s, _ := s.(string); s != "" {
 		return C.CString(s)
 	}
 	return nil
